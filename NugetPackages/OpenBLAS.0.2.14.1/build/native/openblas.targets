@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>HAS_OPENBLAS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)..\..\lib\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)..\..\lib\native\lib\win32\libopenblas.dll.a;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\libopenblas.dll.a;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup Condition="'$(Platform)'=='Win32'">
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\win32\*.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\*.dll" />
+  </ItemGroup>
+  <Target Name="OpenBLAS_AfterBuild" AfterTargets="AfterBuild">
+    <Copy 
+      SkipUnchangedFiles="true" 
+      UseHardlinksIfPossible="true"
+      SourceFiles="@(CopyToOutput)"  
+      DestinationFolder="$(TargetDir)" />
+  </Target>
+
+</Project>

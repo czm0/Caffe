@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="gflags_init_targets_0;gflags_init_targets_1;gflags_init_targets_2;gflags_ItemGroupInit_targets_3">
+  <PropertyGroup Label="Default initializers for properties">
+    <Linkages-gflags Condition="'$(Linkages-gflags)' == ''">dynamic</Linkages-gflags>
+    <CallingConventions-gflags Condition="'$(CallingConventions-gflags)' == ''">cdecl</CallingConventions-gflags>
+    <Threads-gflags Condition="'$(Threads-gflags)' == ''">threads</Threads-gflags>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../..///build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="static" Condition="'$(Linkages-gflags.ToLower())' == 'static'">
+    <Link>
+      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and static and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/static/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and static and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/static/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and static and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/static/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and static and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/static/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and static and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/static/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and static and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/static/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and static and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/static/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and static and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/static/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and static and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/static/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and static and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/static/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and static and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/static/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and static and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/static/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and static and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/static/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and static and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/static/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and static and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v120/static/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and static and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/static/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and static and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/static/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and static and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/static/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v110 and static and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v110/static/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and static and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/static/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and static and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v120/static/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v110 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and static and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/static/Lib/gflags_nothreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflagsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and static and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/static/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v100 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags_nothreads.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v100 and static and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'static' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/Win32/v100/static/Lib/gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Target Name="gflags_AfterBuild" AfterTargets="AfterBuild">
+    <Copy SkipUnchangedFiles="true" SourceFiles="@(CopyToOutput)" UseHardlinksIfPossible="true" DestinationFolder="$(TargetDir)">
+      <Output TaskParameter="DestinationFiles" PropertyName="DestinationFiles" />
+      <Output TaskParameter="DestinationFiles" ItemName="DestinationFiles" />
+      <Output TaskParameter="CopiedFiles" PropertyName="CopiedFiles" />
+      <Output TaskParameter="CopiedFiles" ItemName="CopiedFiles" />
+    </Copy>
+  </Target>
+  <Target Name="gflags_BeforeLink" AfterTargets="BeforeLink">
+    <CheckRuntimeLibrary RuntimeLibrary="%(ClCompile.RuntimeLibrary)" ExpectedRuntimeLibrary="none" LibraryName="gflags" />
+  </Target>
+  <Target Name="gflags_BeforeLink_Debug_and_static" Label="Debug and static" Condition="( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Linkages-gflags.ToLower())' == 'static'" AfterTargets="gflags_BeforeLink">
+    <CheckRuntimeLibrary RuntimeLibrary="%(ClCompile.RuntimeLibrary)" ExpectedRuntimeLibrary="MultiThreadedDebug" LibraryName="gflags" />
+  </Target>
+  <Target Name="gflags_BeforeLink_Release_and_static" Label="Release and static" Condition="( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Linkages-gflags.ToLower())' == 'static'" AfterTargets="gflags_BeforeLink">
+    <CheckRuntimeLibrary RuntimeLibrary="%(ClCompile.RuntimeLibrary)" ExpectedRuntimeLibrary="MultiThreaded" LibraryName="gflags" />
+  </Target>
+  <Target Name="gflags_init_targets_1">
+    <StringContains Text="Linkages-dynamic" Library="gflags" Value="dynamic" Condition="'$(Linkages-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkages-gflags" />
+    </StringContains>
+    <StringContains Text="Linkages-static" Library="gflags" Value="static" Condition="'$(Linkages-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkages-gflags" />
+    </StringContains>
+    <StringContains Text="Linkages-ltcg" Library="gflags" Value="ltcg" Condition="'$(Linkages-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkages-gflags" />
+    </StringContains>
+    <StringContains Text="Linkages-sxs" Library="gflags" Value="sxs" Condition="'$(Linkages-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkages-gflags" />
+    </StringContains>
+    <StringContains Text="CallingConventions-cdecl" Library="gflags" Value="cdecl" Condition="'$(CallingConventions-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConventions-gflags" />
+    </StringContains>
+    <StringContains Text="CallingConventions-stdcall" Library="gflags" Value="stdcall" Condition="'$(CallingConventions-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConventions-gflags" />
+    </StringContains>
+    <StringContains Text="CallingConventions-fastcall" Library="gflags" Value="fastcall" Condition="'$(CallingConventions-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConventions-gflags" />
+    </StringContains>
+    <StringContains Text="CallingConventions-thiscall" Library="gflags" Value="thiscall" Condition="'$(CallingConventions-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConventions-gflags" />
+    </StringContains>
+    <StringContains Text="CallingConventions-clrcall" Library="gflags" Value="clrcall" Condition="'$(CallingConventions-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConventions-gflags" />
+    </StringContains>
+    <StringContains Text="CallingConventions-vectorcall" Library="gflags" Value="vectorcall" Condition="'$(CallingConventions-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConventions-gflags" />
+    </StringContains>
+    <StringContains Text="Threads-threads" Library="gflags" Value="threads" Condition="'$(Threads-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="Threads-gflags" />
+    </StringContains>
+    <StringContains Text="Threads-nothreads" Library="gflags" Value="nothreads" Condition="'$(Threads-gflags)'==''">
+      <Output TaskParameter="Result" PropertyName="Threads-gflags" />
+    </StringContains>
+  </Target>
+  <Target Name="gflags_init_targets_2">
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+    <SetEnv Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'" Name="PATH" Prefix="true" Value="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib">
+      <Output TaskParameter="OutputEnvironmentVariable" PropertyName="PATH" />
+    </SetEnv>
+  </Target>
+  <Target Name="gflags_ItemGroupInit_targets_3">
+    <ItemGroup Label="Win32 and v120 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags_nothreads.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags_nothreads.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v100 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags_nothreadsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags_nothreadsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v120 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v100 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags_nothreadsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags_nothreadsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v100 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags_nothreads.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags_nothreads.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v120 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags_nothreads.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags_nothreads.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v110 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v110 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags_nothreads.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags_nothreads.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v110 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags_nothreadsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflags_nothreadsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v120 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags_nothreadsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags_nothreadsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v110 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags_nothreadsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags_nothreadsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v100 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v110 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflagsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflagsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v120 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflagsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflagsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v120 and dynamic and Debug and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags_nothreadsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v120/dynamic/Lib/gflags_nothreadsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v110 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflagsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v110/dynamic/Lib/gflagsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v100 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflags.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v110 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags_nothreads.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags_nothreads.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v100 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflagsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflagsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v120 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflags.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v120 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And ( '$(PlatformToolset.ToLower())' == 'v120' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflagsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v120/dynamic/Lib/gflagsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v110 and dynamic and Release and threads" Condition="'$(Platform.ToLower())' == 'x64' And ( '$(PlatformToolset.ToLower())' == 'v110' Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v110/dynamic/Lib/gflags.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="Win32 and v100 and dynamic and Debug and threads" Condition="'$(Platform.ToLower())' == 'win32' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Threads-gflags.ToLower())' == 'threads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflagsd.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/Win32/v100/dynamic/Lib/gflagsd.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+    <ItemGroup Label="x64 and v100 and dynamic and Release and nothreads" Condition="'$(Platform.ToLower())' == 'x64' And '$(PlatformToolset.ToLower())' == 'v100' And '$(Linkages-gflags.ToLower())' == 'dynamic' And ( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Threads-gflags.ToLower())' == 'nothreads'">
+      <CopyToOutput Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags_nothreads.dll" />
+      <None Include="$(MSBuildThisFileDirectory)../../build/native/x64/v100/dynamic/Lib/gflags_nothreads.dll">
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+    </ItemGroup>
+  </Target>
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\default-propertiesui.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\gflags-propertiesui-75415a3e-c272-40bd-a00a-580c7fb93942.xml" />
+  </ItemGroup>
+  <UsingTask TaskName="NuGetPackageOverlay" AssemblyFile="$(NuGet-NativeExtensionPath)\coapp.NuGetNativeMSBuildTasks.dll" Condition="'$(DesignTimeBuild)' != 'true' AND ('$(NugetMsBuildExtensionLoaded)' == '' OR '$(NugetMsBuildExtensionLoaded)' == 'false')" />
+  <UsingTask TaskName="CheckRuntimeLibrary" AssemblyFile="$(NuGet-NativeExtensionPath)\coapp.NuGetNativeMSBuildTasks.dll" Condition="'$(DesignTimeBuild)' != 'true' AND ('$(NugetMsBuildExtensionLoaded)' == '' OR '$(NugetMsBuildExtensionLoaded)' == 'false')" />
+  <UsingTask TaskName="StringContains" AssemblyFile="$(NuGet-NativeExtensionPath)\coapp.NuGetNativeMSBuildTasks.dll" Condition="'$(DesignTimeBuild)' != 'true' AND ('$(NugetMsBuildExtensionLoaded)' == '' OR '$(NugetMsBuildExtensionLoaded)' == 'false')" />
+  <Target Name="gflags_init_targets_0">
+    <Copy SkipUnchangedFiles="true" SourceFiles="$(NuGet-NativeExtensionPath)\coapp.NuGetNativeMSBuildTasks.dll.orig" DestinationFiles="$(NuGet-NativeExtensionPath)\coapp.NuGetNativeMSBuildTasks.dll" />
+    <PropertyGroup>
+      <NugetMsBuildExtensionLoaded Condition="'$(NugetMsBuildExtensionLoaded)' == '' OR '$(NuGet-OverlayLoaded)' == 'false'">true</NugetMsBuildExtensionLoaded>
+    </PropertyGroup>
+  </Target>
+</Project>

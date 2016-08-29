@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>HAS_HDF5;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)..\..\lib\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_cpp.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_f90cstub.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_fortran.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_hl.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_hl_cpp.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_hl_f90cstub.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_hl_fortran.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\hdf5_tools.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\szip.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x86\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_cpp.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_f90cstub.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_fortran.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_hl.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_hl_cpp.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_hl_f90cstub.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_hl_fortran.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\hdf5_tools.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\szip.lib;$(MSBuildThisFileDirectory)..\..\lib\native\lib\x64\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup Condition="'$(Platform)'=='Win32'">
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_cpp.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_cpp.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_f90cstub.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_f90cstub.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_fortran.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_hl.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_hl.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_hl_cpp.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_hl_cpp.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_hl_f90cstub.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_hl_f90cstub.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_hl_fortran.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_tools.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\hdf5_tools.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\szip.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x86\zlib.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_cpp.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_cpp.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_f90cstub.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_f90cstub.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_fortran.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_hl.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_hl.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_hl_cpp.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_hl_cpp.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_hl_f90cstub.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_hl_f90cstub.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_hl_fortran.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_tools.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\hdf5_tools.pdb" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\szip.dll" />
+    <CopyToOutput Include="$(MSBuildThisFileDirectory)..\..\lib\native\bin\x64\zlib.dll" />
+  </ItemGroup>
+  <Target Name="hdf5_AfterBuild" AfterTargets="AfterBuild">
+    <Copy 
+      SkipUnchangedFiles="true" 
+      UseHardlinksIfPossible="true"
+      SourceFiles="@(CopyToOutput)"  
+      DestinationFolder="$(TargetDir)" 
+      />
+  </Target>
+
+</Project>

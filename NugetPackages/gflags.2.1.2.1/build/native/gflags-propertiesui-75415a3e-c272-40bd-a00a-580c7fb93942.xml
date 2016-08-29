@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework">
+  <Rule Name="ReferencedPackagesdf9b8556-4868-4587-ba7d-1e7c52e34d64" PageTemplate="tool" DisplayName="Referenced Packages" SwitchPrefix="/" Order="1">
+    <Rule.Categories>
+      <Category Name="gflags" DisplayName="gflags" />
+    </Rule.Categories>
+    <Rule.DataSource>
+      <DataSource Persistence="ProjectFile" ItemType="" />
+    </Rule.DataSource>
+    <EnumProperty Name="Linkages-gflags" DisplayName="Linkages" Description="Which version of the .lib file to link to this library" Category="gflags">
+      <EnumValue Name="" DisplayName="Dynamic Library (DLL)" />
+      <EnumValue Name="static" DisplayName="Static" />
+    </EnumProperty>
+    <EnumProperty Name="Threads-gflags" DisplayName="Threads" Description="Link with gflags.lib or gflags_nothreads.lib" Category="gflags">
+      <EnumValue Name="" DisplayName="With Threads" />
+      <EnumValue Name="nothreads" DisplayName="Without Threads" />
+    </EnumProperty>
+  </Rule>
+</ProjectSchemaDefinitions>

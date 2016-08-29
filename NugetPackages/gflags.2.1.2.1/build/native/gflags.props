@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Threads>threads</Threads>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Needs-gflags-Version)' == '' OR '$(Needs-gflags-Version)' == '*Undefined*'">
+    <NugetMsBuildExtensionLoaded Condition="'$(NugetMsBuildExtensionLoaded)' == '' OR '$(NuGet-OverlayLoaded)' == 'false'">false</NugetMsBuildExtensionLoaded>
+    <NuGet-NativeExtensionPath Condition="'$(NuGet-NativeExtensionPath)' == '' OR '$(NuGet-NativeExtensionVersion)' =='' OR $(NuGet-NativeExtensionVersion) &lt; 562967165599744">$(MSBuildThisFileDirectory)\private</NuGet-NativeExtensionPath>
+    <Needs-gflags />
+    <Needs-gflags-Version />
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="protobuf-v120_init">
+  <PropertyGroup Label="Debug and static and RuntimeLibraryNull" Condition="( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 ) And '$(Linkage-protobuf-v120.ToLower())' == 'static' And ('$(RuntimeLibrary)' == '')">
+    <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+  </PropertyGroup>
+  <PropertyGroup Label="Release and static and RuntimeLibraryNull" Condition="( $(Configuration.ToLower().IndexOf('debug')) == -1 ) And '$(Linkage-protobuf-v120.ToLower())' == 'static' And ('$(RuntimeLibrary)' == '')">
+    <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+  </PropertyGroup>
+  <PropertyGroup Label="Default initializers for properties">
+    <Linkage-protobuf-v120 Condition="'$(Linkage-protobuf-v120)' == ''">dynamic</Linkage-protobuf-v120>
+    <CallingConvention-protobuf-v120 Condition="'$(CallingConvention-protobuf-v120)' == ''">cdecl</CallingConvention-protobuf-v120>
+  </PropertyGroup>
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\default-propertiesui.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\protobuf-v120-propertiesui-b5f47fc0-1381-4cb6-8576-fd3836a0f28b.xml" />
+  </ItemGroup>
+  <ItemDefinitionGroup Label="static" Condition="'$(Linkage-protobuf-v120.ToLower())' == 'static'">
+    <ClCompile>
+      <RuntimeLibrary>$(RuntimeLibrary)</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and Release" Condition="'$(Platform.ToLower())' == 'x64' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) == -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/x64\v120\Release\libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and Debug" Condition="'$(Platform.ToLower())' == 'x64' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/x64\v120\Debug\libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and Release" Condition="'$(Platform.ToLower())' == 'win32' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) == -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/Win32\v120\Release\libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and Debug" Condition="'$(Platform.ToLower())' == 'win32' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/Win32\v120\Debug\libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../..//build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../..//build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <UsingTask TaskName="protobuf-v120_Contains" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">
+    <ParameterGroup>
+      <Text Output="false" ParameterType="System.String" />
+      <Library Output="false" Required="true" ParameterType="System.String" />
+      <Value Output="false" Required="true" ParameterType="System.String" />
+      <Result Output="true" ParameterType="System.String" />
+    </ParameterGroup>
+    <Task>
+      <Code>Result = ((Text ?? "").Split(';').Contains(Library) ) ? Value : String.Empty;</Code>
+    </Task>
+  </UsingTask>
+  <Target Name="protobuf-v120_init">
+    <protobuf-v120_Contains Text="Linkage-dynamic" Library="protobuf-v120" Value="dynamic" Condition="'$(Linkage-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="Linkage-static" Library="protobuf-v120" Value="static" Condition="'$(Linkage-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="Linkage-ltcg" Library="protobuf-v120" Value="ltcg" Condition="'$(Linkage-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="Linkage-sxs" Library="protobuf-v120" Value="sxs" Condition="'$(Linkage-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="CallingConvention-cdecl" Library="protobuf-v120" Value="cdecl" Condition="'$(CallingConvention-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="CallingConvention-stdcall" Library="protobuf-v120" Value="stdcall" Condition="'$(CallingConvention-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="CallingConvention-fastcall" Library="protobuf-v120" Value="fastcall" Condition="'$(CallingConvention-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="CallingConvention-thiscall" Library="protobuf-v120" Value="thiscall" Condition="'$(CallingConvention-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-protobuf-v120" />
+    </protobuf-v120_Contains>
+    <protobuf-v120_Contains Text="CallingConvention-clrcall" Library="protobuf-v120" Value="clrcall" Condition="'$(CallingConvention-protobuf-v120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-protobuf-v120" />
+    </protobuf-v120_Contains>
+  </Target>
+</Project>

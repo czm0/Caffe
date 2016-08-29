@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="LevelDB-vc120_init">
+  <PropertyGroup Label="Default initializers for properties">
+    <Linkage-LevelDB-vc120 Condition="'$(Linkage-LevelDB-vc120)' == ''">dynamic</Linkage-LevelDB-vc120>
+    <CallingConvention-LevelDB-vc120 Condition="'$(CallingConvention-LevelDB-vc120)' == ''">cdecl</CallingConvention-LevelDB-vc120>
+  </PropertyGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and Release" Condition="'$(Platform.ToLower())' == 'win32' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) == -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/Win32\v120\Release\LevelDb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and v120 and Debug" Condition="'$(Platform.ToLower())' == 'win32' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/Win32\v120\Debug\LevelDb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and Release" Condition="'$(Platform.ToLower())' == 'x64' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) == -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/x64\v120\Release\LevelDb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and v120 and Debug" Condition="'$(Platform.ToLower())' == 'x64' And ( $(PlatformToolset.ToLower().IndexOf('v120')) &gt; -1 Or '$(PlatformToolset.ToLower())' == 'windowskernelmodedriver8.0' Or '$(PlatformToolset.ToLower())' == 'windowsapplicationfordrivers8.0' Or '$(PlatformToolset.ToLower())' == 'windowsusermodedriver8.0' ) And ( $(Configuration.ToLower().IndexOf('debug')) &gt; -1 )">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/x64\v120\Debug\LevelDb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../..//build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../..//build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\default-propertiesui.xml" />
+  </ItemGroup>
+  <UsingTask TaskName="LevelDB-vc120_Contains" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">
+    <ParameterGroup>
+      <Text Output="false" ParameterType="System.String" />
+      <Library Output="false" Required="true" ParameterType="System.String" />
+      <Value Output="false" Required="true" ParameterType="System.String" />
+      <Result Output="true" ParameterType="System.String" />
+    </ParameterGroup>
+    <Task>
+      <Code>Result = ((Text ?? "").Split(';').Contains(Library) ) ? Value : String.Empty;</Code>
+    </Task>
+  </UsingTask>
+  <Target Name="LevelDB-vc120_init">
+    <LevelDB-vc120_Contains Text="Linkage-dynamic" Library="LevelDB-vc120" Value="dynamic" Condition="'$(Linkage-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="Linkage-static" Library="LevelDB-vc120" Value="static" Condition="'$(Linkage-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="Linkage-ltcg" Library="LevelDB-vc120" Value="ltcg" Condition="'$(Linkage-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="Linkage-sxs" Library="LevelDB-vc120" Value="sxs" Condition="'$(Linkage-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="CallingConvention-cdecl" Library="LevelDB-vc120" Value="cdecl" Condition="'$(CallingConvention-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="CallingConvention-stdcall" Library="LevelDB-vc120" Value="stdcall" Condition="'$(CallingConvention-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="CallingConvention-fastcall" Library="LevelDB-vc120" Value="fastcall" Condition="'$(CallingConvention-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="CallingConvention-thiscall" Library="LevelDB-vc120" Value="thiscall" Condition="'$(CallingConvention-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+    <LevelDB-vc120_Contains Text="CallingConvention-clrcall" Library="LevelDB-vc120" Value="clrcall" Condition="'$(CallingConvention-LevelDB-vc120)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-LevelDB-vc120" />
+    </LevelDB-vc120_Contains>
+  </Target>
+</Project>

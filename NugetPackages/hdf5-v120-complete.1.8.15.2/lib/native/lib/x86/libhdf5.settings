@@ -1,0 +1,67 @@
+      SUMMARY OF THE HDF5 CONFIGURATION
+      =================================
+
+General Information:
+-------------------
+                   HDF5 Version: 1.8.15-patch1
+                  Configured on: 
+                  Configured by: Visual Studio 12 2013
+                 Configure mode: CMAKE 3.1.0
+                    Host system: Windows-6.1
+              Uname information: Windows
+                       Byte sex: little-endian
+                      Libraries: 
+             Installation point: C:/Program Files/HDF_Group/HDF5/1.8.15
+
+Compiling Options:
+------------------
+               Compilation Mode: RelWithDebInfo
+                     C Compiler: C:/Program Files/Microsoft Visual Studio 12.0/VC/bin/cl.exe
+                         CFLAGS:  /DWIN32 /D_WINDOWS /W3
+                      H5_CFLAGS: 
+                      AM_CFLAGS: 
+                       CPPFLAGS: 
+                    H5_CPPFLAGS: 
+                    AM_CPPFLAGS: 
+               Shared Libraries: YES
+               Static Libraries: NO
+  Statically Linked Executables: OFF
+                        LDFLAGS:  /machine:X86
+                     AM_LDFLAGS: 
+                Extra libraries: zlib;szip
+                       Archiver: 
+                         Ranlib: 
+              Debugged Packages: 
+                    API Tracing: OFF
+
+Languages:
+----------
+                        Fortran: ON
+               Fortran Compiler: C:/Program Files/Intel/Composer XE 2015/bin/ia32/ifort.exe
+          Fortran 2003 Compiler: ON
+                  Fortran Flags:  /W1 /nologo /fpp /libs:dll /threads
+               H5 Fortran Flags: 
+               AM Fortran Flags: 
+                            C++: ON
+                   C++ Compiler: C:/Program Files/Microsoft Visual Studio 12.0/VC/bin/cl.exe
+                      C++ Flags:  /DWIN32 /D_WINDOWS /W3 /GR /EHsc
+                   H5 C++ Flags: 
+                   AM C++ Flags: 
+
+Features:
+---------
+                  Parallel HDF5: OFF
+             High Level library: ON
+                   Threadsafety: OFF
+            Default API Mapping: v18
+ With Deprecated Public Symbols: ON
+         I/O filters (external):  DEFLATE DECODE ENCODE
+         I/O filters (internal): 
+                            MPE: 
+                     Direct VFD: 
+                        dmalloc: 
+Clear file buffers before write: ON
+           Using memory checker: OFF
+         Function Stack Tracing: OFF
+      Strict File Format Checks: OFF
+   Optimization Instrumentation: 
