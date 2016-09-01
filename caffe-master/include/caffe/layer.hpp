@@ -37,15 +37,19 @@ class Layer {
    * to SetUp(), where the dimensions of the bottom blobs are provided to the
    * layer.
    */
+	 /*
+	 *构造函数，初始化参数
+	 *
+	 */
   explicit Layer(const LayerParameter& param)
     : layer_param_(param), is_shared_(false) {
       // Set phase and copy blobs (if there are any).
-      phase_ = param.phase();
+      phase_ = param.phase();		//获得当前网络的phase是test还是train
       if (layer_param_.blobs_size() > 0) {
         blobs_.resize(layer_param_.blobs_size());
         for (int i = 0; i < layer_param_.blobs_size(); ++i) {
           blobs_[i].reset(new Blob<Dtype>());
-          blobs_[i]->FromProto(layer_param_.blobs(i));
+          blobs_[i]->FromProto(layer_param_.blobs(i));			//读取Blob数据
         }
       }
     }
@@ -66,11 +70,11 @@ class Layer {
    */
   void SetUp(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top) {
-    InitMutex();
-    CheckBlobCounts(bottom, top);
-    LayerSetUp(bottom, top);
-    Reshape(bottom, top);
-    SetLossWeights(top);
+    InitMutex();					//初始化互斥(多线程)
+    CheckBlobCounts(bottom, top);	//检查Blob的个数是否正确
+    LayerSetUp(bottom, top);		//设置具体的层
+    Reshape(bottom, top);			//reshape bottom 和 top大小	
+    SetLossWeights(top);			//设置top Blob的loss weight
   }
 
   /**
@@ -98,12 +102,14 @@ class Layer {
    *        not be shared. data layers should be shared to ensure each worker
    *        solver access data sequentially during data parallelism.
    */
+  //这个层在数据并行时是否应该被多个网络共享，默认只有数据层被共享
   virtual inline bool ShareInParallel() const { return false; }
 
   /** @brief Return whether this layer is actually shared by other nets.
    *         If ShareInParallel() is true and using more than one GPU and the
    *         net has TRAIN phase, then this function is expected return true.
    */
+  //返回这个层是否被共享,如果ShareInParallel()为true并且使用多个gpu，则这个函数返回true
   inline bool IsShared() const { return is_shared_; }
 
   /** @brief Set whether this layer is actually shared by other nets
@@ -128,6 +134,7 @@ class Layer {
    * and making any other necessary adjustments so that the layer can
    * accommodate the bottom blobs.
    */
+  //根据bottom Blob来调整top Blob和internal buffer的大小
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top) = 0;
 
@@ -191,6 +198,8 @@ class Layer {
   /**
    * @brief Writes the layer parameter to a protocol buffer
    */
+
+  //把层参数写入到param里面
   virtual void ToProto(LayerParameter* param, bool write_diff = false);
 
   /**
@@ -280,6 +289,7 @@ class Layer {
    * blobs to fulfill the requirement specified by ExactNumTopBlobs() or
    * MinTopBlobs().
    */
+  //如果设置为true，则net初始化的时候会自动填充top使其满足ExactNumTopBlobs() or MinTopBlobs().
   virtual inline bool AutoTopBlobs() const { return false; }
 
   /**
@@ -321,16 +331,17 @@ class Layer {
 
  protected:
   /** The protobuf that stores the layer parameters */
-  LayerParameter layer_param_;
+  LayerParameter layer_param_;		//层参数
   /** The phase: TRAIN or TEST */
-  Phase phase_;
+  Phase phase_;			//训练还是测试
   /** The vector that stores the learnable parameters as a set of blobs. */
-  vector<shared_ptr<Blob<Dtype> > > blobs_;
+  vector<shared_ptr<Blob<Dtype> > > blobs_;		//储存训练的参数（权值w和偏执b）
   /** Vector indicating whether to compute the diff of each param blob. */
-  vector<bool> param_propagate_down_;
+  vector<bool> param_propagate_down_;			//是否要计算diff
 
   /** The vector that indicates whether each top blob has a non-zero weight in
    *  the objective function. */
+  //表明top Blob是否含有非0的权值
   vector<Dtype> loss_;
 
   /** @brief Using the CPU device, compute the layer output. */
@@ -431,13 +442,13 @@ class Layer {
 
  private:
   /** Whether this layer is actually shared by other nets*/
-  bool is_shared_;
+  bool is_shared_;	//是否和其他net共享，一般data层共享
 
   /** The mutex for sequential forward if this layer is shared */
-  shared_ptr<boost::mutex> forward_mutex_;
+  shared_ptr<boost::mutex> forward_mutex_;		//如果共享，则设置互斥锁，防止多个线程同时修改
 
   /** Initialize forward_mutex_ */
-  void InitMutex();
+  void InitMutex();					
   /** Lock forward_mutex_ if this layer is shared */
   void Lock();
   /** Unlock forward_mutex_ if this layer is shared */

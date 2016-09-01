@@ -25,6 +25,7 @@ Caffe& Caffe::Get() {
 }
 
 // random seeding
+//随机数种子
 int64_t cluster_seedgen(void) {
   int64_t s, seed, pid;
   FILE* f = fopen("/dev/urandom", "rb");

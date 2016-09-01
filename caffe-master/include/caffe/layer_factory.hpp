@@ -127,7 +127,9 @@ class LayerRegisterer {
 #define REGISTER_LAYER_CREATOR(type, creator)                                  \
   static LayerRegisterer<float> g_creator_f_##type(#type, creator<float>);     \
   static LayerRegisterer<double> g_creator_d_##type(#type, creator<double>)    \
-
+/*
+Layer工厂模式用的宏，也就是将这个Layer的信息写到工厂的管理数据库里。
+*/
 #define REGISTER_LAYER_CLASS(type)                                             \
   template <typename Dtype>                                                    \
   shared_ptr<Layer<Dtype> > Creator_##type##Layer(const LayerParameter& param) \

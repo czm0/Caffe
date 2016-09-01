@@ -22,6 +22,7 @@ class BlockingQueue {
   bool try_peek(T* t);
 
   // Return element without removing it
+  //获得元素但是不移除
   T peek();
 
   size_t size() const;
