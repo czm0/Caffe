@@ -12,6 +12,7 @@
 //blob可以看成多维数组，axe表示有几维
 const int kMaxBlobAxes = 32;	//Blob最大维数
 
+//Blob使用的是线性存储，因为cuda最多支持3维数组。所以Blob使用offset来模拟多维数组
 namespace caffe {
 
 /**
@@ -286,8 +287,8 @@ class Blob {
   shared_ptr<SyncedMemory> diff_;			//反向传播的梯度数据
   shared_ptr<SyncedMemory> shape_data_;		//Blob的形状
   vector<int> shape_;						//Blob的形状
-  int count_;								//图像个数*通道数*高度*宽度
-  int capacity_;							//当前元素个数
+  int count_;								//新的reshape大小。图像个数*通道数*高度*宽度
+  int capacity_;							//历史reshape大小。当前元素个数
 
   DISABLE_COPY_AND_ASSIGN(Blob);
 };  // class Blob

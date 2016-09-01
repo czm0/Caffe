@@ -16,6 +16,7 @@ namespace caffe {
 template <typename Dtype>
 class DataTransformer {
  public:
+	 //初始化data_mean_  mean_values_
   explicit DataTransformer(const TransformationParameter& param, Phase phase);
   virtual ~DataTransformer() {}
 
@@ -23,6 +24,7 @@ class DataTransformer {
    * @brief Initialize the Random number generations if needed by the
    *    transformation.
    */
+  //初始化随机数发生器
   void InitRand();
 
   /**
@@ -35,6 +37,8 @@ class DataTransformer {
    *    This is destination blob. It can be part of top blob's data if
    *    set_cpu_data() is used. See data_layer.cpp for an example.
    */
+  //对数据进行变形,实现随机crop。目的是为了实现Data Augmentation。
+  // http://www.cnblogs.com/neopenx/p/5315945.html
   void Transform(const Datum& datum, Blob<Dtype>* transformed_blob);
 
   /**
@@ -97,6 +101,7 @@ class DataTransformer {
    * @param datum
    *    Datum containing the data to be transformed.
    */
+  //根据数据推测datalayer的Blob大小
   vector<int> InferBlobShape(const Datum& datum);
   /**
    * @brief Infers the shape of transformed_blob will have when
@@ -136,6 +141,7 @@ class DataTransformer {
    * @return
    *    A uniformly random integer value from ({0, 1, ..., n-1}).
    */
+	 //产生一个[0  n-1]的整形随机数
   virtual int Rand(int n);
 
   void Transform(const Datum& datum, Dtype* transformed_data);
@@ -145,8 +151,8 @@ class DataTransformer {
 
   shared_ptr<Caffe::RNG> rng_;
   Phase phase_;
-  Blob<Dtype> data_mean_;
-  vector<Dtype> mean_values_;
+  Blob<Dtype> data_mean_;		//逐像素均值
+  vector<Dtype> mean_values_;	//逐通道均值
 };
 
 }  // namespace caffe

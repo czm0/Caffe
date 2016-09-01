@@ -65,10 +65,12 @@ void DataTransformer<Dtype>::Transform(const Datum& datum,
     mean = data_mean_.mutable_cpu_data();
   }
   if (has_mean_values) {
+	 //mean value能提供的维数只能是1或者数据维数
     CHECK(mean_values_.size() == 1 || mean_values_.size() == datum_channels) <<
      "Specify either 1 mean_value or as many as channels: " << datum_channels;
     if (datum_channels > 1 && mean_values_.size() == 1) {
       // Replicate the mean_value for simplicity
+		//如果只提供了1维的mean value，则复制mean value使其维数和数据通道相同
       for (int c = 1; c < datum_channels; ++c) {
         mean_values_.push_back(mean_values_[0]);
       }
@@ -84,6 +86,7 @@ void DataTransformer<Dtype>::Transform(const Datum& datum,
     height = crop_size;
     width = crop_size;
     // We only do random crop when we do training.
+	//只在训练的时候做随机裁剪
     if (phase_ == TRAIN) {
       h_off = Rand(datum_height - crop_size + 1);
       w_off = Rand(datum_width - crop_size + 1);

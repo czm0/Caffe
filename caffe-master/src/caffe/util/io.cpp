@@ -62,7 +62,7 @@ bool ReadProtoFromBinaryFile(const char* filename, Message* proto) {
 #endif
   CHECK_NE(fd, -1) << "File not found: " << filename;
   ZeroCopyInputStream* raw_input = new FileInputStream(fd);
-  CodedInputStream* coded_input = new CodedInputStream(raw_input);
+  CodedInputStream* coded_input = new CodedInputStream(raw_input);		//解除二进制编码
   coded_input->SetTotalBytesLimit(kProtoReadBytesLimit, 536870912);
 
   bool success = proto->ParseFromCodedStream(coded_input);

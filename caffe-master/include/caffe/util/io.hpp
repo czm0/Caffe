@@ -15,7 +15,7 @@
 #ifndef CAFFE_TMP_DIR_RETRIES
 #define CAFFE_TMP_DIR_RETRIES 100
 #endif
-
+//对Protocol Buffer的底层文件系统API进行封装
 namespace caffe {
 
 using ::google::protobuf::Message;

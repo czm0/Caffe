@@ -15,6 +15,7 @@ using boost::weak_ptr;
 map<const string, weak_ptr<DataReader::Body> > DataReader::bodies_;
 static boost::mutex bodies_mutex_;
 
+//构造函数，填充队列数据，Datum全是空元素，且存入队列的应该是指针。
 DataReader::DataReader(const LayerParameter& param)
     : queue_pair_(new QueuePair(  //
         param.data_param().prefetch() * param.data_param().batch_size())) {
@@ -39,10 +40,11 @@ DataReader::~DataReader() {
   }
 }
 
-//
+
 
 DataReader::QueuePair::QueuePair(int size) {
   // Initialize the free queue with requested number of datums
+  //初始化free队列为需要的大小
   for (int i = 0; i < size; ++i) {
     free_.push(new Datum());
   }
@@ -58,18 +60,18 @@ DataReader::QueuePair::~QueuePair() {
   }
 }
 
-//
-
+//构造函数，启动body线程
 DataReader::Body::Body(const LayerParameter& param)
     : param_(param),
       new_queue_pairs_() {
   StartInternalThread();
 }
-
+//停止body线程
 DataReader::Body::~Body() {
   StopInternalThread();
 }
-
+//body线程入口，从数据库中读入数据。
+//在训练的时候线程会一直执行这个函数读取数据，直到训练结束
 void DataReader::Body::InternalThreadEntry() {
   shared_ptr<db::DB> db(db::GetDB(param_.data_param().backend()));
   db->Open(param_.data_param().source(), db::READ);
@@ -102,6 +104,8 @@ void DataReader::Body::InternalThreadEntry() {
   }
 }
 
+//read_one每次从一个双缓冲组的free队列中取出空Datum指针。
+//利用Protocol Buffer的反序列化函数ParseFromString，从数据库中还原Datum，再扔到full队列里。
 void DataReader::Body::read_one(db::Cursor* cursor, QueuePair* qp) {
   Datum* datum = qp->free_.pop();
   // TODO deserialize in-place instead of copy?
