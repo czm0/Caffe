@@ -52,6 +52,8 @@ void DataLayer<Dtype>::DataLayerSetUp(const vector<Blob<Dtype>*>& bottom,
 }
 
 // This function is called on prefetch thread
+//从datum读取数据到batch
+//这个函数在BasePrefetchingDataLayer的线程中被调用
 template<typename Dtype>
 void DataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
   CPUTimer batch_timer;
@@ -67,11 +69,12 @@ void DataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
   const int batch_size = this->layer_param_.data_param().batch_size();
   Datum& datum = *(reader_.full().peek());
   // Use data_transformer to infer the expected blob shape from datum.
+  //通过datum来推断shape大小
   vector<int> top_shape = this->data_transformer_->InferBlobShape(datum);
   this->transformed_data_.Reshape(top_shape);
   // Reshape batch according to the batch_size.
   top_shape[0] = batch_size;
-  batch->data_.Reshape(top_shape);
+  batch->data_.Reshape(top_shape);		//reshape batch中data的形状
 
   Dtype* top_data = batch->data_.mutable_cpu_data();
   Dtype* top_label = NULL;  // suppress warnings about uninitialized variables
@@ -86,6 +89,7 @@ void DataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
     read_time += timer.MicroSeconds();
     timer.Start();
     // Apply data transformations (mirror, scale, crop...)
+	//获取每个batch的偏移值，如果datum为图像数据的话，相当于获取每张图像的偏移值
     int offset = batch->data_.offset(item_id);
     this->transformed_data_.set_cpu_data(top_data + offset);
     this->data_transformer_->Transform(datum, &(this->transformed_data_));

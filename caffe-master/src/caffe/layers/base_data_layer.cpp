@@ -75,6 +75,7 @@ void BasePrefetchingDataLayer<Dtype>::LayerSetUp(
 template <typename Dtype>
 void BasePrefetchingDataLayer<Dtype>::InternalThreadEntry() {
 #ifndef CPU_ONLY
+	//获取流flag
   cudaStream_t stream;
   if (Caffe::mode() == Caffe::GPU) {
     CUDA_CHECK(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
@@ -86,6 +87,7 @@ void BasePrefetchingDataLayer<Dtype>::InternalThreadEntry() {
       Batch<Dtype>* batch = prefetch_free_.pop();
       load_batch(batch);
 #ifndef CPU_ONLY
+	  //异步复制数据到gpu
       if (Caffe::mode() == Caffe::GPU) {
         batch->data_.data().get()->async_gpu_push(stream);
         CUDA_CHECK(cudaStreamSynchronize(stream));
@@ -97,6 +99,7 @@ void BasePrefetchingDataLayer<Dtype>::InternalThreadEntry() {
     // Interrupted exception is expected on shutdown
   }
 #ifndef CPU_ONLY
+  //释放流
   if (Caffe::mode() == Caffe::GPU) {
     CUDA_CHECK(cudaStreamDestroy(stream));
   }

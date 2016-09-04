@@ -1,7 +1,8 @@
 // Fillers are random number generators that fills a blob using the specified
 // algorithm. The expectation is that they are only going to be used during
 // initialization time and will not involve any GPUs.
-
+//填充器是一个随机数产生器，用来填充Blob的初始值
+//如果想要设计自己的填充器，继承filler类并且重写fill函数
 #ifndef CAFFE_FILLER_HPP
 #define CAFFE_FILLER_HPP
 

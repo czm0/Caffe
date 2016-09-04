@@ -29,7 +29,7 @@ class DataLayer : public BasePrefetchingDataLayer<Dtype> {
   virtual inline int MaxTopBlobs() const { return 2; }
 
  protected:
-  virtual void load_batch(Batch<Dtype>* batch);
+  virtual void load_batch(Batch<Dtype>* batch);			//从datum中load数据到batch
 
   DataReader reader_;
 };

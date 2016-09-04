@@ -44,13 +44,13 @@ class PoolingLayer : public Layer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 
-  int kernel_h_, kernel_w_;
-  int stride_h_, stride_w_;
-  int pad_h_, pad_w_;
-  int channels_;
-  int height_, width_;
-  int pooled_height_, pooled_width_;
-  bool global_pooling_;
+  int kernel_h_, kernel_w_;			//pooling核的长宽
+  int stride_h_, stride_w_;			//步长
+  int pad_h_, pad_w_;				//padding
+  int channels_;					//bottom的通道数
+  int height_, width_;				//bottom的h和w
+  int pooled_height_, pooled_width_;		//pooling之后的大小
+  bool global_pooling_;				//全局pooling，如果为true，kernel_h = bottom->height and kernel_w = bottom->width
   Blob<Dtype> rand_idx_;
   Blob<int> max_idx_;
 };

@@ -22,8 +22,9 @@ void BaseConvolutionLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   vector<int> bottom_dim_blob_shape(1, num_spatial_axes_ + 1);
   vector<int> spatial_dim_blob_shape(1, std::max(num_spatial_axes_, 1));
   // Setup filter kernel dimensions (kernel_shape_).
-  kernel_shape_.Reshape(spatial_dim_blob_shape);
+  kernel_shape_.Reshape(spatial_dim_blob_shape);	//设置卷积核的维数
   int* kernel_shape_data = kernel_shape_.mutable_cpu_data();
+  //设置卷积核大小，如果已经指定不同的h、w大小则直接赋值(只能用2d)，否则复制kernel_size到所有维数
   if (conv_param.has_kernel_h() || conv_param.has_kernel_w()) {
     CHECK_EQ(num_spatial_axes_, 2)
         << "kernel_h & kernel_w can only be used for 2D convolution.";
@@ -42,10 +43,12 @@ void BaseConvolutionLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
             conv_param.kernel_size((num_kernel_dims == 1) ? 0 : i);
       }
   }
+  //检查卷积核大小，不能出现0值
   for (int i = 0; i < num_spatial_axes_; ++i) {
     CHECK_GT(kernel_shape_data[i], 0) << "Filter dimensions must be nonzero.";
   }
   // Setup stride dimensions (stride_).
+  //设置步长
   stride_.Reshape(spatial_dim_blob_shape);
   int* stride_data = stride_.mutable_cpu_data();
   if (conv_param.has_stride_h() || conv_param.has_stride_w()) {
@@ -122,6 +125,7 @@ void BaseConvolutionLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   CHECK_EQ(channels_ % group_, 0);
   CHECK_EQ(num_output_ % group_, 0)
       << "Number of output should be multiples of group.";
+  //判断是卷积(false)还是反卷积(true)
   if (reverse_dimensions()) {
     conv_out_channels_ = channels_;
     conv_in_channels_ = num_output_;
@@ -164,11 +168,13 @@ void BaseConvolutionLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
     }
     // Initialize and fill the weights:
     // output channels x input channels per-group x kernel height x kernel width
+	//初始化和填充权值
     this->blobs_[0].reset(new Blob<Dtype>(weight_shape));
     shared_ptr<Filler<Dtype> > weight_filler(GetFiller<Dtype>(
         this->layer_param_.convolution_param().weight_filler()));
     weight_filler->Fill(this->blobs_[0].get());
     // If necessary, initialize and fill the biases.
+	//初始化和填充偏移值
     if (bias_term_) {
       this->blobs_[1].reset(new Blob<Dtype>(bias_shape));
       shared_ptr<Filler<Dtype> > bias_filler(GetFiller<Dtype>(
@@ -179,7 +185,7 @@ void BaseConvolutionLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   kernel_dim_ = this->blobs_[0]->count(1);
   weight_offset_ = conv_out_channels_ * kernel_dim_ / group_;
   // Propagate gradients to the parameters (as directed by backward pass).
-  this->param_propagate_down_.resize(this->blobs_.size(), true);
+  this->param_propagate_down_.resize(this->blobs_.size(), true);	//计算diff
 }
 
 template <typename Dtype>
@@ -192,13 +198,14 @@ void BaseConvolutionLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
   CHECK_EQ(bottom[0]->shape(channel_axis_), channels_)
       << "Input size incompatible with convolution kernel.";
   // TODO: generalize to handle inputs of different shapes.
+  //所有的输入应该具有相同的大小
   for (int bottom_id = 1; bottom_id < bottom.size(); ++bottom_id) {
     CHECK(bottom[0]->shape() == bottom[bottom_id]->shape())
         << "All inputs must have the same shape.";
   }
   // Shape the tops.
   bottom_shape_ = &bottom[0]->shape();
-  compute_output_shape();
+  compute_output_shape();		//计算output的shape
   vector<int> top_shape(bottom[0]->shape().begin(),
       bottom[0]->shape().begin() + channel_axis_);
   top_shape.push_back(num_output_);
@@ -216,6 +223,7 @@ void BaseConvolutionLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
   col_offset_ = kernel_dim_ * conv_out_spatial_dim_;
   output_offset_ = conv_out_channels_ * conv_out_spatial_dim_ / group_;
   // Setup input dimensions (conv_input_shape_).
+  //设置输入维数
   vector<int> bottom_dim_blob_shape(1, num_spatial_axes_ + 1);
   conv_input_shape_.Reshape(bottom_dim_blob_shape);
   int* conv_input_shape_data = conv_input_shape_.mutable_cpu_data();

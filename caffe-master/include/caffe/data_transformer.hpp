@@ -38,6 +38,7 @@ class DataTransformer {
    *    set_cpu_data() is used. See data_layer.cpp for an example.
    */
   //对数据进行变形,实现随机crop。目的是为了实现Data Augmentation。
+  //对Transform(const Datum& datum, Dtype* transformed_data)函数进行封装
   // http://www.cnblogs.com/neopenx/p/5315945.html
   void Transform(const Datum& datum, Blob<Dtype>* transformed_blob);
 

@@ -34,6 +34,7 @@ void PoolingLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       && pool_param.has_stride_w())
       || (!pool_param.has_stride_h() && !pool_param.has_stride_w()))
       << "Stride is stride OR stride_h and stride_w are required.";
+  //设置pooling核大小
   global_pooling_ = pool_param.global_pooling();
   if (global_pooling_) {
     kernel_h_ = bottom[0]->height();
@@ -94,6 +95,7 @@ void PoolingLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
   if (pad_h_ || pad_w_) {
     // If we have padding, ensure that the last pooling starts strictly
     // inside the image (instead of at the padding); otherwise clip the last.
+	  //确保所有的pooling点都在image里面
     if ((pooled_height_ - 1) * stride_h_ >= height_ + pad_h_) {
       --pooled_height_;
     }

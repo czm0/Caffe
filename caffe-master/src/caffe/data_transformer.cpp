@@ -46,7 +46,7 @@ void DataTransformer<Dtype>::Transform(const Datum& datum,
   const int datum_height = datum.height();
   const int datum_width = datum.width();
 
-  const int crop_size = param_.crop_size();
+  const int crop_size = param_.crop_size();			//裁剪后的图片大小
   const Dtype scale = param_.scale();
   const bool do_mirror = param_.mirror() && Rand(2);
   const bool has_mean_file = param_.has_mean_file();
@@ -86,16 +86,18 @@ void DataTransformer<Dtype>::Transform(const Datum& datum,
     height = crop_size;
     width = crop_size;
     // We only do random crop when we do training.
-	//只在训练的时候做随机裁剪
+	//只在训练的时候做随机裁剪,如果裁剪的图片大小为crop_size，那么我们有datum_height - crop_size + 1的偏移量可以随机
     if (phase_ == TRAIN) {
       h_off = Rand(datum_height - crop_size + 1);
       w_off = Rand(datum_width - crop_size + 1);
     } else {
+	//如果是测试阶段，则不随机裁剪
       h_off = (datum_height - crop_size) / 2;
       w_off = (datum_width - crop_size) / 2;
     }
   }
 
+  //对于datum的每个channel、height、width做mean和scale操作(如果这两个操作已经定义了)
   Dtype datum_element;
   int top_index, data_index;
   for (int c = 0; c < datum_channels; ++c) {

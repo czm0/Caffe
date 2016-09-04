@@ -17,7 +17,7 @@ static boost::mutex bodies_mutex_;
 
 //构造函数，填充队列数据，Datum全是空元素，且存入队列的应该是指针。
 DataReader::DataReader(const LayerParameter& param)
-    : queue_pair_(new QueuePair(  //
+    : queue_pair_(new QueuePair(  //total size = prefetch * batch_size，也就是说，我们需要与缓冲prefetch个batch，每个Batch有batch_size个Datum单元。
         param.data_param().prefetch() * param.data_param().batch_size())) {
   // Get or create a body
   boost::mutex::scoped_lock lock(bodies_mutex_);

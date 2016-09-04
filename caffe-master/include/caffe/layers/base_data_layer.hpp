@@ -62,23 +62,30 @@ class BasePrefetchingDataLayer :
   void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
 
+  //二级消费者，消费自己生产的batch。
+  //data Layer 不需要backward
+  //forward函数实现了把bottom复制给top的功能
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
   virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
 
   // Prefetches batches (asynchronously if to GPU memory)
+  //预读取的batch数量
   static const int PREFETCH_COUNT = 3;
 
  protected:
+	 //线程入口，载入batch数据并且利用CUDA的异步流预先由内存向显存转换数据
   virtual void InternalThreadEntry();
   virtual void load_batch(Batch<Dtype>* batch) = 0;
 
   Batch<Dtype> prefetch_[PREFETCH_COUNT];
+  
+  //二级生产者，封装datum到batch
   BlockingQueue<Batch<Dtype>*> prefetch_free_;
   BlockingQueue<Batch<Dtype>*> prefetch_full_;
 
-  Blob<Dtype> transformed_data_;
+  Blob<Dtype> transformed_data_;	//已经被转化的数据
 };
 
 }  // namespace caffe
