@@ -68,10 +68,11 @@ void InnerProductLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
   M_ = bottom[0]->count(0, axis);
   // The top shape will be the bottom shape with the flattened axes dropped,
   // and replaced by a single axis with dimension num_output (N_).
+  //top shape = (num N_)
   vector<int> top_shape = bottom[0]->shape();
   top_shape.resize(axis + 1);
   top_shape[axis] = N_;
-  top[0]->Reshape(top_shape);
+  top[0]->Reshape(top_shape); 
   // Set up the bias multiplier
   if (bias_term_) {
     vector<int> bias_shape(1, M_);
@@ -104,6 +105,7 @@ void InnerProductLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     const Dtype* top_diff = top[0]->cpu_diff();
     const Dtype* bottom_data = bottom[0]->cpu_data();
     // Gradient with respect to weight
+	//对参数求偏导，top_diff*bottom_data=blobs_diff
     if (transpose_) {
       caffe_cpu_gemm<Dtype>(CblasTrans, CblasNoTrans,
           K_, N_, M_,
@@ -119,6 +121,7 @@ void InnerProductLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   if (bias_term_ && this->param_propagate_down_[1]) {
     const Dtype* top_diff = top[0]->cpu_diff();
     // Gradient with respect to bias
+	// 对偏置求偏导top_diff*bias=blobs_diff
     caffe_cpu_gemv<Dtype>(CblasTrans, M_, N_, (Dtype)1., top_diff,
         bias_multiplier_.cpu_data(), (Dtype)1.,
         this->blobs_[1]->mutable_cpu_diff());
@@ -126,6 +129,7 @@ void InnerProductLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   if (propagate_down[0]) {
     const Dtype* top_diff = top[0]->cpu_diff();
     // Gradient with respect to bottom data
+	//对上一层输出求偏导top_diff*blobs_data=bottom_diff
     if (transpose_) {
       caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasTrans,
           M_, K_, N_,

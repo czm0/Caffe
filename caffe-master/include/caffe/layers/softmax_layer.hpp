@@ -36,8 +36,8 @@ class SoftmaxLayer : public Layer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 
-  int outer_num_;
-  int inner_num_;
+  int outer_num_;				//输出的样本数量
+  int inner_num_;				//类别数
   int softmax_axis_;
   /// sum_multiplier is used to carry out sum using BLAS
   Blob<Dtype> sum_multiplier_;

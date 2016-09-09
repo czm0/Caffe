@@ -52,7 +52,7 @@ class PoolingLayer : public Layer<Dtype> {
   int pooled_height_, pooled_width_;		//pooling之后的大小
   bool global_pooling_;				//全局pooling，如果为true，kernel_h = bottom->height and kernel_w = bottom->width
   Blob<Dtype> rand_idx_;
-  Blob<int> max_idx_;
+  Blob<int> max_idx_;				//pooling时最大值的索引
 };
 
 }  // namespace caffe

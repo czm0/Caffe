@@ -133,13 +133,14 @@ void PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   Dtype* top_data = top[0]->mutable_cpu_data();
   const int top_count = top[0]->count();
   // We'll output the mask to top[1] if it's of size >1.
+  //如果top>1,则把遮罩输入到top[1]中
   const bool use_top_mask = top.size() > 1;
   int* mask = NULL;  // suppress warnings about uninitalized variables
   Dtype* top_mask = NULL;
   // Different pooling methods. We explicitly do the switch outside the for
   // loop to save time, although this results in more code.
   switch (this->layer_param_.pooling_param().pool()) {
-  case PoolingParameter_PoolMethod_MAX:
+  case PoolingParameter_PoolMethod_MAX:		//max pooling
     // Initialize
     if (use_top_mask) {
       top_mask = top[1]->mutable_cpu_data();
@@ -177,6 +178,7 @@ void PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
           }
         }
         // compute offset
+		//计算下一个通道的偏移
         bottom_data += bottom[0]->offset(0, 1);
         top_data += top[0]->offset(0, 1);
         if (use_top_mask) {
@@ -187,7 +189,7 @@ void PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       }
     }
     break;
-  case PoolingParameter_PoolMethod_AVE:
+  case PoolingParameter_PoolMethod_AVE:				//average pooling
     for (int i = 0; i < top_count; ++i) {
       top_data[i] = 0;
     }
@@ -238,6 +240,7 @@ void PoolingLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   Dtype* bottom_diff = bottom[0]->mutable_cpu_diff();
   // Different pooling methods. We explicitly do the switch outside the for
   // loop to save time, although this results in more codes.
+  //初始化bottom diff为0
   caffe_set(bottom[0]->count(), Dtype(0), bottom_diff);
   // We'll output the mask to top[1] if it's of size >1.
   const bool use_top_mask = top.size() > 1;
@@ -249,6 +252,7 @@ void PoolingLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     if (use_top_mask) {
       top_mask = top[1]->cpu_data();
     } else {
+		//在forward计算时，mask保存了从bottom data中的坐标
       mask = max_idx_.cpu_data();
     }
     for (int n = 0; n < top[0]->num(); ++n) {

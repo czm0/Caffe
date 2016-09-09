@@ -114,6 +114,7 @@ void SoftmaxWithLossLayer<Dtype>::Forward_cpu(
   }
 }
 
+////http://www.cnblogs.com/neopenx/p/5590756.html
 template <typename Dtype>
 void SoftmaxWithLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {

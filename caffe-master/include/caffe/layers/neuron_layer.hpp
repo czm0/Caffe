@@ -15,6 +15,7 @@ namespace caffe {
  *        each element of the output depends only on the corresponding input
  *        element.
  */
+//这个类是获得一个和输入形状大小相同的输出，输出的具体值取决于输入值和激活函数
 template <typename Dtype>
 class NeuronLayer : public Layer<Dtype> {
  public:
