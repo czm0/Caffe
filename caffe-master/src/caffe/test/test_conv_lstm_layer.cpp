@@ -308,7 +308,7 @@ namespace caffe
 		convolution_param->set_num_output(12);
 		//convolution_param->mutable_bias_filler()->set_type("constant");
 		//convolution_param->mutable_bias_filler()->set_value(1.0);
-		convolution_param->set_bias_term(true);
+		convolution_param->set_bias_term(false);
 
 		shared_ptr<Layer<Dtype> > layer(
 			new ConvolutionLSTMLayer<Dtype>(layer_param_1));
@@ -327,6 +327,24 @@ namespace caffe
 	}
 	//Test LayerSetUp
 
+	TYPED_TEST(ConvolutionLSTMLayerTest, TestGradient)
+	{
+		typedef typename TypeParam::Dtype Dtype;
+		LayerParameter layer_param;
+		ConvolutionParameter* convolution_param =
+			layer_param.mutable_convolution_param();
+		//this->blob_bottom_vec_.push_back(this->blob_bottom_);
+		//this->blob_top_vec_.push_back(this->blob_top_);
+		convolution_param->add_kernel_size(3);
+		convolution_param->add_stride(1);
+		convolution_param->set_num_output(12);
+		convolution_param->mutable_weight_filler()->set_type("gaussian");
+		convolution_param->set_bias_term(false);
+		ConvolutionLSTMLayer<Dtype> layer(layer_param);
+		GradientChecker<Dtype> checker(1e-2, 1e-3);
+		checker.CheckGradientExhaustive(&layer, this->blob_bottom_vec_,
+			this->blob_top_vec_);
+	}
 
 
 
