@@ -50,13 +50,15 @@ class Solver {
   // Client of the Solver optionally may call this in order to set the function
   // that the solver uses to see what action it should take (e.g. snapshot or
   // exit training early).
+  //设置回滚函数，训练时中断，可以回滚到上一节点继续训练
   void SetActionFunction(ActionCallback func);
   SolverAction::Enum GetRequestedAction();
   // The main entry of the solver function. In default, iter will be zero. Pass
   // in a non-zero iter number to resume training for a pre-trained net.
+  //主入口函数，实现训练和测试
   virtual void Solve(const char* resume_file = NULL);
   inline void Solve(const string resume_file) { Solve(resume_file.c_str()); }
-  void Step(int iters);
+  void Step(int iters);		//实现训练
   // The Restore method simply dispatches to one of the
   // RestoreSolverStateFrom___ protected methods. You should implement these
   // methods to restore the state from the appropriate snapshot type.
@@ -112,7 +114,7 @@ class Solver {
   SolverParameter param_;
   int iter_;
   int current_step_;
-  shared_ptr<Net<Dtype> > net_;
+  shared_ptr<Net<Dtype> > net_;				
   vector<shared_ptr<Net<Dtype> > > test_nets_;
   vector<Callback*> callbacks_;
   vector<Dtype> losses_;
@@ -124,10 +126,11 @@ class Solver {
 
   // A function that can be set by a client of the Solver to provide indication
   // that it wants a snapshot saved and/or to exit early.
+  //action回调函数,用于和用户交互
   ActionCallback action_request_function_;
 
   // True iff a request to stop early was received.
-  bool requested_early_exit_;
+  bool requested_early_exit_;		//是否需要提前退出
 
   DISABLE_COPY_AND_ASSIGN(Solver);
 };

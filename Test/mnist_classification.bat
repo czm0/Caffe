@@ -1,0 +1,2 @@
+..\caffe-master\Build\x64\Release\classification.exe examples\mnist\lenet.prototxt examples\mnist\lenet_iter_10000.caffemodel examples\mnist\mean.binaryproto examples\mnist\synset_words.txt examples\mnist\binarybmp\03.bmp
+pause

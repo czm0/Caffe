@@ -4,7 +4,7 @@ package caffe;
 
 // Specifies the shape (dimensions) of a Blob.
 message BlobShape {
-  repeated int64 dim = 1 [packed = true]; //使用[packed=true]似乎可以优化速度，对于float其实是无效的。
+  repeated int64 dim = 1 [packed = true];
 }
 
 message BlobProto {
@@ -15,7 +15,6 @@ message BlobProto {
   repeated double double_diff = 9 [packed = true];
 
   // 4D dimensions -- deprecated.  Use "shape" instead.
-  //4维已经被弃用，多维Blob方便拓展
   optional int32 num = 1 [default = 0];
   optional int32 channels = 2 [default = 0];
   optional int32 height = 3 [default = 0];
@@ -28,7 +27,6 @@ message BlobProtoVector {
   repeated BlobProto blobs = 1;
 }
 
-//图像数据
 message Datum {
   optional int32 channels = 1;
   optional int32 height = 2;

@@ -166,7 +166,7 @@ class BaseConvolutionLayer : public Layer<Dtype> {
   int num_kernels_col2im_;
   int conv_out_channels_;				//输出的通道数(输出的特征数量)
   int conv_in_channels_;				//输入的通道数
-  int conv_out_spatial_dim_;			//top的c*h*w
+  int conv_out_spatial_dim_;			//top的h*w
   int kernel_dim_;						//卷积核 c*h*w
   int col_offset_;						//列偏移
   int output_offset_;					//输出偏移

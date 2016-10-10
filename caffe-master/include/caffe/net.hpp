@@ -63,6 +63,7 @@ class Net {
    * @brief Zeroes out the diffs of all net parameters.
    *        Should be run before Backward.
    */
+  //清除所有Layer中Blob的diff
   void ClearParamDiffs();
 
   /**
@@ -91,6 +92,7 @@ class Net {
   }
 
   /// @brief Updates the network weights based on the diff values computed.
+  //更新权值
   void Update();
   /**
    * @brief Shares weight data of owner blobs with shared blobs.
@@ -104,6 +106,7 @@ class Net {
    * @brief For an already initialized net, implicitly copies (i.e., using no
    *        additional memory) the pre-trained layers from another Net.
    */
+  //从另外一个net共享数据
   void ShareTrainedLayersWith(const Net* other);
   // For an already initialized net, CopyTrainedLayersFrom() copies the already
   // trained layers from another net parameter instance.
@@ -222,6 +225,7 @@ class Net {
    * @brief Remove layers that the user specified should be excluded given the current
    *        phase, level, and stage.
    */
+  //过滤掉不需要的Layer
   static void FilterNet(const NetParameter& param,
       NetParameter* param_filtered);
   /// @brief return whether NetState state meets NetStateRule rule
@@ -254,7 +258,7 @@ class Net {
   /// @brief The phase: TRAIN or TEST
   Phase phase_;
   /// @brief Individual layers in the net
-  vector<shared_ptr<Layer<Dtype> > > layers_;
+  vector<shared_ptr<Layer<Dtype> > > layers_;		
   vector<string> layer_names_;
   map<string, int> layer_names_index_;
   vector<bool> layer_need_backward_;
@@ -286,8 +290,8 @@ class Net {
   vector<Blob<Dtype>*> net_input_blobs_;
   vector<Blob<Dtype>*> net_output_blobs_;
   /// The parameters in the network.
-  vector<shared_ptr<Blob<Dtype> > > params_;
-  vector<Blob<Dtype>*> learnable_params_;
+  vector<shared_ptr<Blob<Dtype> > > params_;			//Layer的Blob参数
+  vector<Blob<Dtype>*> learnable_params_;				//能学习的参数
   /**
    * The mapping from params_ -> learnable_params_: we have
    * learnable_param_ids_.size() == params_.size(),

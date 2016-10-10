@@ -60,6 +60,9 @@ typedef int (*BrewFunction)();
 typedef std::map<caffe::string, BrewFunction> BrewMap;
 BrewMap g_brew_map;
 
+//注册brew函数
+//把test、train、device_query、time函数加入map容器
+//可以使用命令行控制使用哪个函数
 #define RegisterBrewFunction(func) \
 namespace { \
 class __Registerer_##func { \
