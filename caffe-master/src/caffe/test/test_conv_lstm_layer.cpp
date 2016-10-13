@@ -155,8 +155,8 @@ namespace caffe
 		convolution_param_2.set_pad_h(1);
 		convolution_param_2.set_pad_w(1);
 		int T_ = in->num();
-		vector<shared_ptr<Blob<Dtype>>> gate;
-		vector<shared_ptr<Blob<Dtype>>> pre_gate;
+		vector<shared_ptr<Blob<Dtype> > > gate;
+		vector<shared_ptr<Blob<Dtype> > > pre_gate;
 		Blob<Dtype> cell;
 
 

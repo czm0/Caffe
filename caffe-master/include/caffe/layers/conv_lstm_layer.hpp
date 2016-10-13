@@ -7,21 +7,21 @@
 namespace caffe
 {
 	template<typename Dtype>
-	class ConvolutionLSTMLayer : public Layer<Dtype>
+	class ConvolutionLSTMLayer : public Layer < Dtype >
 	{
 	public:
 		ConvolutionLSTMLayer(const LayerParameter& param) : Layer<Dtype>(param) {}
 
-		virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,const vector<Blob<Dtype>*>& top);
-		virtual void Reshape(const vector<Blob<Dtype>*>& bottom,const vector<Blob<Dtype>*>& top);
+		virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top);
+		virtual void Reshape(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top);
 		virtual inline const char* type() const { return "ConvolutionLstm"; }
-		virtual inline int ExactNumBottomBlobs() const {return 1;}
-		virtual inline int ExactNumTopBlobs() const {return 1;}
+		virtual inline int ExactNumBottomBlobs() const { return 1; }
+		virtual inline int ExactNumTopBlobs() const { return 1; }
 		virtual inline bool EqualNumBottomTopBlobs() const { return true; }
 
 	protected:
 		virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top);
-		
+
 		//virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,const vector<Blob<Dtype>*>& top);
 		virtual void Backward_cpu(const vector<Blob<Dtype>*>& top, const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 		//virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
@@ -30,7 +30,7 @@ namespace caffe
 			return (*bottom_shape_)[1 + i];
 		}
 		void forward_cpu_gemm(const Dtype* input, const Dtype* weights,
-			Dtype* output,bool isWX);
+			Dtype* output, bool isWX);
 		void forward_cpu_bias(Dtype* output, const Dtype* bias);
 
 		void weight_cpu_gemm(const Dtype* data, const Dtype* gate_diff, Dtype* weight_diff, bool isWX);
@@ -48,11 +48,11 @@ namespace caffe
 		Blob<int> dilation_;
 		vector<int> wh_pad_;
 		vector<int> wh_stride_;
-	
+
 
 		bool bias_term_;					//是否需要bias
 
-		
+
 		int conv_out_channels_;
 		int kernel_height_;
 		int kernel_width_;
@@ -74,15 +74,15 @@ namespace caffe
 		Blob<Dtype> col_buffer_hx_;
 
 		//rnn参数
-		vector<shared_ptr<Blob<Dtype>>> gate_;
-		vector<shared_ptr<Blob<Dtype>>> pre_gate_;
+		vector<shared_ptr<Blob<Dtype> > > gate_;
+		vector<shared_ptr<Blob<Dtype> > > pre_gate_;
 		Blob<Dtype> cell_;
 		Blob<Dtype> h_to_h_;
 
 	private:
 		int num_;
 		Blob<Dtype> bias_multiplier_;			//偏移的乘数
-		inline void conv_im2col_cpu(const Dtype* data, Dtype* col_buff , bool isWX) {
+		inline void conv_im2col_cpu(const Dtype* data, Dtype* col_buff, bool isWX) {
 			if (isWX)
 			{
 				im2col_cpu(data, (*bottom_shape_)[1],
@@ -102,9 +102,9 @@ namespace caffe
 					dilation_.cpu_data()[0], dilation_.cpu_data()[1], col_buff);
 
 			}
-			
+
 		}
-		inline void conv_col2im_cpu(const Dtype* col_buff, Dtype* data,bool isWX) {	
+		inline void conv_col2im_cpu(const Dtype* col_buff, Dtype* data, bool isWX) {
 			if (isWX)
 			{
 				col2im_cpu(col_buff, (*bottom_shape_)[1],

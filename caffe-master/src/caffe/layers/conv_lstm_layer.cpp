@@ -1,4 +1,4 @@
-#include "caffe\layers\conv_lstm_layer.hpp"
+#include "caffe/layers/conv_lstm_layer.hpp"
 #include "caffe/blob.hpp"
 #include "caffe/common.hpp"
 #include "caffe/filler.hpp"
@@ -71,26 +71,26 @@ namespace caffe
 		{
 			this->blobs_.resize(8);
 		}
-		
+
 		for (int i = 0; i < 4; i++)
 		{
 			this->blobs_[i].reset(new Blob<Dtype>(kernel_shape_));
 			this->blobs_[i + 4].reset(new Blob<Dtype>(kernel_shape_hx_));
 			weight_filler.Fill(this->blobs_[i].get());
-			weight_filler.Fill(this->blobs_[i+4].get());
+			weight_filler.Fill(this->blobs_[i + 4].get());
 		}
 		bottom_shape_ = &bottom[0]->shape();
 		//初始化偏移
 		if (bias_term_)
 		{
-			vector<int> bias_shape(conv_out_channels_,1);
+			vector<int> bias_shape(conv_out_channels_, 1);
 			for (int i = 0; i < 4; i++)
 			{
-				this->blobs_[8+ i].reset(new Blob<Dtype>(bias_shape));
+				this->blobs_[8 + i].reset(new Blob<Dtype>(bias_shape));
 				bias_filler.Fill(this->blobs_[8 + i].get());
 			}
-			
-			
+
+
 		}
 
 		kernel_dim_ = this->blobs_[0]->count(1);
@@ -105,7 +105,7 @@ namespace caffe
 	{
 		num_ = bottom[0]->num();
 		T_ = num_ / batch_size_;
-		
+
 		compute_output_shape();
 		top_shape_.clear();
 		top_shape_.push_back(num_);
@@ -142,13 +142,13 @@ namespace caffe
 			pre_gate_[i].reset(new Blob<Dtype>(gate_shape));
 		}
 		cell_.Reshape(top_shape_);
-		h_to_h_.Reshape(1, top_shape_[1],top_shape_[2], top_shape_[3]);
+		h_to_h_.Reshape(1, top_shape_[1], top_shape_[2], top_shape_[3]);
 
 		if (bias_term_)
 		{
 			vector<int> bias_multiplier_shape(1, conv_out_spatial_dim_);
 			bias_multiplier_.Reshape(bias_multiplier_shape);
-			caffe_set(bias_multiplier_.count(),Dtype(1),bias_multiplier_.mutable_cpu_data());
+			caffe_set(bias_multiplier_.count(), Dtype(1), bias_multiplier_.mutable_cpu_data());
 		}
 
 
@@ -156,7 +156,48 @@ namespace caffe
 	template <typename Dtype>
 	void ConvolutionLSTMLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top)
 	{
-		
+
+		////////////////////////////////////////////////////////////////////
+		/*const Dtype* data = bottom[0]->cpu_data();
+		vector<int> offset(4);
+		cout << "bottom: " << endl;
+
+		for (int c = 0; c < 3; c++)
+		{
+		cout << "c"<<c << ":" << endl;
+		for (int h = 0; h < 3; h++)
+		{
+		for (int w = 0; w < 3; w++)
+		{
+		offset[0] = 0;
+		offset[1] = c;
+		offset[2] = h;
+		offset[3] = w;
+		cout << data[bottom[0]->offset(offset)] << " ";
+		}
+		cout << endl;
+		}
+		}
+		cout << "blobs_: " << endl;
+		const Dtype* weight = this->blobs_[0]->cpu_data();
+		for (int c = 0; c < 3; c++)
+		{
+		cout << "c" << c << ":" << endl;
+		for (int h = 0; h < 3; h++)
+		{
+		for (int w = 0; w < 3; w++)
+		{
+		offset[0] = 0;
+		offset[1] = c;
+		offset[2] = h;
+		offset[3] = w;
+		cout << weight[blobs_[0]->offset(offset)] << " ";
+		}
+		cout << endl;
+		}
+		}*/
+		///////////////////////////////////////////////////////////////////
+		int count = top[0]->count();
 		for (int t = 0; t < T_; t++)
 		{
 			const Dtype* bottom_data = bottom[0]->cpu_data() + bottom[0]->offset(t * batch_size_);
@@ -172,25 +213,25 @@ namespace caffe
 			{
 				for (int i = 0; i < 4; i++)
 				{
-				    const Dtype* weightX = this->blobs_[i]->cpu_data();
+					const Dtype* weightX = this->blobs_[i]->cpu_data();
 					const Dtype* weightH = this->blobs_[i + 4]->cpu_data();
 					Dtype* gate_data = gate_[i]->mutable_cpu_data() + gate_[i]->offset(t * batch_size_);
 					Dtype* pre_gate_data = pre_gate_[i]->mutable_cpu_data();
-					
+
 					//卷积操作
 					//gate_data =  W * X 
-					
-					this->forward_cpu_gemm(bottom_data + b * bottom_dim_, weightX, gate_data + b * top_dim_,true);
+
+					this->forward_cpu_gemm(bottom_data + b * bottom_dim_, weightX, gate_data + b * top_dim_, true);
 					if (t > 0)
 					{
-						
+
 						//pre_gate_data = W * H(t-1)
 						this->forward_cpu_gemm(pre_h_data + b * top_dim_, weightH, pre_gate_data + b * top_dim_, false);
 						//gate_data = gate_data + pre_gate_data
 						caffe_add(top_dim_, pre_gate_data + b * top_dim_, gate_data + b * top_dim_, gate_data + b * top_dim_);
-					
+
 					}
-					
+
 					if (bias_term_)
 					{
 						const Dtype* bias = this->blobs_[8 + i]->cpu_data();
@@ -235,34 +276,58 @@ namespace caffe
 					{
 						cell_data[n] += pre_cell_data[n] * ft[n];
 					}
+					/////////////////////////////////////////////////////////////
+					Dtype temp = tanh(cell_data[n]);
 					h_data[n] = tanh(cell_data[n]) * ot[n];
+					///////////////////////////////////////////////////////////////
 				}
-				
+
 			}
 		}
+
+
+
+
+		//////////////////////////////////////////////////////////////////////////
+		//const Dtype* h_data = top[0]->cpu_data();
+		//cout << "top(0,0,0,0) = " << h_data[0] << endl;
+		/////////////////////////////////////////////////////////////////////////
 	}
 	template <typename Dtype>
 	void ConvolutionLSTMLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top, const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom)
 	{
+
+		///////////////////////////////////
+		caffe_set(cell_.count(), Dtype(0.), cell_.mutable_cpu_diff());
+		for (int i = 0; i < 4; i++)
+		{
+			caffe_set(gate_[i]->count(), Dtype(0.), gate_[i]->mutable_cpu_diff());
+			caffe_set(pre_gate_[i]->count(), Dtype(0.), pre_gate_[i]->mutable_cpu_diff());
+
+		}
+		///////////////////////////////////
+
+
 		for (int t = T_ - 1; t >= 0; t--)
 		{
+			
 			const Dtype* bottom_data = bottom[0]->cpu_data() + bottom[0]->offset(t * batch_size_);
-			
-			Dtype* h_diff = top[0]->mutable_cpu_diff() + top[0]->offset(t*batch_size_);
-			
-			Dtype* cell_diff = cell_.mutable_cpu_diff() + cell_.offset(t*batch_size_);
 
-			const Dtype* cell_data_t_1 = t > 0 ? cell_.cpu_data() + cell_.offset((t - 1)*batch_size_) : NULL;
+			Dtype* h_diff = top[0]->mutable_cpu_diff() + top[0]->offset(t * batch_size_);
+
+			Dtype* cell_diff = cell_.mutable_cpu_diff() + cell_.offset(t * batch_size_);
+
+			const Dtype* cell_data_t_1 = t > 0 ? cell_.cpu_data() + cell_.offset((t - 1) * batch_size_) : NULL;
 			const Dtype* cell_data = cell_.cpu_data() + cell_.offset(t*batch_size_);
 
-			Dtype* cell_diff_t_1 = t > 0 ? cell_.mutable_cpu_diff() + cell_.offset((t -1)*batch_size_) : NULL;
+			Dtype* cell_diff_t_1 = t > 0 ? cell_.mutable_cpu_diff() + cell_.offset((t - 1) * batch_size_) : NULL;
 			//Dtype* h_diff_t_1 = t > 0 ? top[0]->mutable_cpu_diff() + top[0]->offset((t -1)*batch_size_) : NULL;
 
-			const Dtype* gt = gate_[3]->cpu_data()  + gate_[3]->offset(t * batch_size_);
-			const Dtype* it = gate_[0]->cpu_data()  + gate_[0]->offset(t * batch_size_);
+			const Dtype* gt = gate_[3]->cpu_data() + gate_[3]->offset(t * batch_size_);
+			const Dtype* it = gate_[0]->cpu_data() + gate_[0]->offset(t * batch_size_);
 			const Dtype* ft = gate_[1]->cpu_data() + gate_[1]->offset(t * batch_size_);
 			const Dtype* ot = gate_[2]->cpu_data() + gate_[2]->offset(t * batch_size_);
-			
+
 			Dtype* pre_gt_diff = pre_gate_[3]->mutable_cpu_diff();
 			Dtype* pre_it_diff = pre_gate_[0]->mutable_cpu_diff();
 			Dtype* pre_ft_diff = pre_gate_[1]->mutable_cpu_diff();
@@ -277,12 +342,12 @@ namespace caffe
 				//计算gate_diff
 				for (int n = 0; n < top_dim_; n++)
 				{
-					Dtype tanh_c = tanh(cell_data[n]);
+					const Dtype tanh_c = tanh(cell_data[n]);
 					cell_diff[n] += h_diff[n] * (Dtype(1.) - tanh_c * tanh_c) * ot[n];
 					if (t > 0)
 					{
 						cell_diff_t_1[n] = cell_diff[n] * ft[n];
-						
+
 					}
 
 					pre_gt_diff[n] = cell_diff[n] * it[n];
@@ -297,7 +362,7 @@ namespace caffe
 						pre_ft_diff[n] = 0;
 					}
 					pre_ot_diff[n] = tanh_c * h_diff[n];
-					
+
 
 					gt_diff[n] = pre_gt_diff[n] * (Dtype(1.0) - gt[n] * gt[n]);
 					it_diff[n] = pre_it_diff[n] * it[n] * (Dtype(1.0) - it[n]);
@@ -311,14 +376,16 @@ namespace caffe
 				{
 					Dtype* h_diff_t_1 = top[0]->mutable_cpu_diff() + top[0]->offset((t - 1)*batch_size_) + top[0]->offset(b);
 					Dtype* col_buffer = col_buffer_hx_.mutable_cpu_diff();
+					caffe_set(col_buffer_hx_.count(), static_cast<Dtype>(0), col_buffer);
 					Dtype* h_to_h = h_to_h_.mutable_cpu_data();
+					//caffe_set(h_to_h_.count(), static_cast<Dtype>(0), h_to_h);
 					for (int i = 0; i < 4; i++)
 					{
 						const Dtype* weightH = this->blobs_[i + 4]->cpu_data();
-						const Dtype* gate_data = gate_[i]->cpu_diff() + gate_[i]->offset(b) + gate_[i]->offset(t * batch_size_);
-						caffe_cpu_gemm(CblasTrans, CblasNoTrans, kernel_dim_hx_, conv_out_spatial_dim_, conv_out_channels_, Dtype(1.), weightH, gate_data, Dtype(1.), col_buffer);
+						const Dtype* gate_diff = gate_[i]->cpu_diff() + gate_[i]->offset(b) + gate_[i]->offset(t * batch_size_);
+						caffe_cpu_gemm(CblasTrans, CblasNoTrans, kernel_dim_hx_, conv_out_spatial_dim_, conv_out_channels_, Dtype(1.), weightH, gate_diff, Dtype(1.), col_buffer);
 					}
-					conv_col2im_cpu(col_buffer, h_to_h,false);
+					conv_col2im_cpu(col_buffer, h_to_h, false);
 					caffe_add(top_dim_, h_to_h, h_diff_t_1, h_diff_t_1);
 					cell_data_t_1 += cell_.offset(1);
 					cell_diff_t_1 += cell_.offset(1);
@@ -336,7 +403,7 @@ namespace caffe
 				Dtype* Wfh_diff = this->blobs_[5]->mutable_cpu_diff();
 				Dtype* Woh_diff = this->blobs_[6]->mutable_cpu_diff();
 
-			
+
 				weight_cpu_gemm(bottom_data, gt_diff, Wgx_diff, true);
 				weight_cpu_gemm(bottom_data, it_diff, Wix_diff, true);
 				weight_cpu_gemm(bottom_data, ft_diff, Wfx_diff, true);
@@ -359,6 +426,7 @@ namespace caffe
 				//计算x_diff
 				Dtype* data_diff = bottom[0]->mutable_cpu_diff() + bottom[0]->offset(t * batch_size_) + bottom[0]->offset(b);
 				Dtype* col_buffer = col_buffer_.mutable_cpu_diff();
+				caffe_set(col_buffer_.count(), static_cast<Dtype>(0), col_buffer);
 				for (int i = 0; i < 4; i++)
 				{
 					const Dtype* weight = this->blobs_[i]->cpu_data();
@@ -388,9 +456,6 @@ namespace caffe
 
 				bottom_data += bottom[0]->offset(1);
 			}
-
-			//
-
 		}
 	}
 
@@ -404,7 +469,7 @@ namespace caffe
 		for (int i = 0; i < 2; ++i) {
 			// i + 1 to skip channel axis
 			const int input_dim = this->input_shape(i + 1);
-			const int kernel_extent = dilation_data[i] * (kernel_shape_[i+2] - 1) + 1;
+			const int kernel_extent = dilation_data[i] * (kernel_shape_[i + 2] - 1) + 1;
 			const int output_dim = (input_dim + 2 * pad_data[i] - kernel_extent)
 				/ stride_data[i] + 1;//计算输出图像的大小
 			this->output_shape_.push_back(output_dim);
@@ -433,8 +498,8 @@ namespace caffe
 				(Dtype)1., weights, col_buff,
 				(Dtype)0., output);
 		}
-	
-		
+
+
 
 	}
 
@@ -460,14 +525,14 @@ namespace caffe
 			const Dtype* col_buff = col_buffer_hx_.cpu_data();
 			caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasTrans, conv_out_channels_, kernel_dim_hx_, conv_out_spatial_dim_, Dtype(1.0), gate_diff, col_buff, Dtype(1.), weight_diff);
 		}
-		
+
 	}
 
 	template <typename Dtype>
 	void  ConvolutionLSTMLayer<Dtype>::backward_cpu_gemm(const Dtype* weight, const Dtype* gate_diff, Dtype* data_diff, bool isWX)
 	{
-		
-		
+
+
 
 	}
 	INSTANTIATE_CLASS(ConvolutionLSTMLayer);
