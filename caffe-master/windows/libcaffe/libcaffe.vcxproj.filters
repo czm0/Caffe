@@ -336,15 +336,6 @@
     <ClCompile Include="..\..\src\caffe\util\signal_handler.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\caffe\layers\lstm_unit_layer.cpp">
-      <Filter>src\layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\caffe\layers\lstm_layer.cpp">
-      <Filter>src\layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\caffe\layers\recurrent_layer.cpp">
-      <Filter>src\layers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\caffe\layers\conv_lstm_layer.cpp">
       <Filter>src\layers</Filter>
     </ClCompile>
@@ -650,12 +641,6 @@
     <ClInclude Include="..\..\include\caffe\layers\scale_layer.hpp">
       <Filter>include\layers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\caffe\layers\lstm_layer.hpp">
-      <Filter>include\layers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\caffe\layers\recurrent_layer.hpp">
-      <Filter>include\layers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\caffe\layers\conv_lstm_layer.hpp">
       <Filter>include\layers</Filter>
     </ClInclude>
@@ -721,19 +706,7 @@
     <CudaCompile Include="..\..\src\caffe\solvers\sgd_solver.cu" />
     <CudaCompile Include="..\..\src\caffe\util\im2col.cu" />
     <CudaCompile Include="..\..\src\caffe\util\math_functions.cu" />
-    <CudaCompile Include="..\..\src\caffe\layers\lstm_unit_layer.cu">
-      <Filter>cu\layers</Filter>
-    </CudaCompile>
-    <CudaCompile Include="..\..\src\caffe\layers\recurrent_layer.cu">
-      <Filter>cu\layers</Filter>
-    </CudaCompile>
-    <CudaCompile Include="..\..\src\caffe\layers\renet_lstm_layer.cu">
-      <Filter>cu\layers</Filter>
-    </CudaCompile>
-    <CudaCompile Include="..\..\src\caffe\layers\roi_pooling_layer.cu">
-      <Filter>cu\layers</Filter>
-    </CudaCompile>
-    <CudaCompile Include="..\..\src\caffe\layers\smooth_l1_loss_layer.cu">
+    <CudaCompile Include="..\..\src\caffe\layers\conv_lstm_layer.cu">
       <Filter>cu\layers</Filter>
     </CudaCompile>
   </ItemGroup>

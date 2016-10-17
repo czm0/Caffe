@@ -312,7 +312,7 @@ message LayerParameter {
   optional string type = 2; // the layer type
   repeated string bottom = 3; // the name of each bottom blob
   repeated string top = 4; // the name of each top blob
-
+ 
   // The train / test phase for computation.
   optional Phase phase = 10;
 
@@ -365,6 +365,7 @@ message LayerParameter {
   optional ConcatParameter concat_param = 104;
   optional ContrastiveLossParameter contrastive_loss_param = 105;
   optional ConvolutionParameter convolution_param = 106;
+  optional ConvolutionLstmParameter conv_lstm_param = 149;
   optional CropParameter crop_param = 144;
   optional DataParameter data_param = 107;
   optional DropoutParameter dropout_param = 108;
@@ -409,6 +410,17 @@ message LayerParameter {
   optional MILParameter mil_param = 0x004d494c; //"MIL"
 }
 
+message ConvolutionLstmParameter{
+	optional uint32 num_output = 1;			//The number of outputs for the layer
+	optional bool bias_term = 2 [default = true];   // whether to have bias terms
+	optional uint32 batch_size = 3 [default = 1];   //
+	optional uint32 pad = 4 [default = 0]; // The padding size; defaults to 0
+	optional uint32 kernel_size = 5; // The kernel size
+	optional uint32 stride = 6 [default = 1]; // The stride; defaults to 1
+	optional uint32 dilation = 7 [default = 1]; // The dilation; defaults to 1
+	optional FillerParameter weight_filler = 8; // The filler for the weight
+	optional FillerParameter bias_filler = 9; // The filler for the bias
+}
 // Message that stores parameters used to apply transformation
 // to the data layer's data
 message TransformationParameter {

@@ -12,7 +12,6 @@
 #include "caffe/net.hpp"
 
 namespace caffe {
-
 // The gradient checker adds a L2 normalization loss function on top of the
 // top blobs, and checks the gradient.
 template <typename Dtype>
@@ -195,7 +194,7 @@ void GradientChecker<Dtype>::CheckGradientExhaustive(Layer<Dtype>* layer,
   // LOG(ERROR) << "Exhaustive Mode.";
   for (int i = 0; i < top.size(); ++i) {
     // LOG(ERROR) << "Exhaustive: blob " << i << " size " << top[i]->count();
-    for (int j = 489; j < 500/*top[i]->count()*/; ++j) {
+    for (int j = 0; j < top[i]->count(); ++j) {
       // LOG(ERROR) << "Exhaustive: blob " << i << " data " << j;
       CheckGradientSingle(layer, bottom, top, check_bottom, i, j);
 	  cout << j << endl;

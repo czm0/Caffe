@@ -21,25 +21,24 @@ namespace caffe
 
 	protected:
 		virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top);
-
-		//virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,const vector<Blob<Dtype>*>& top);
+		virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,const vector<Blob<Dtype>*>& top);
 		virtual void Backward_cpu(const vector<Blob<Dtype>*>& top, const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
-		//virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+		virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 		void compute_output_shape();
-		inline int input_shape(int i) {
-			return (*bottom_shape_)[1 + i];
-		}
-		void forward_cpu_gemm(const Dtype* input, const Dtype* weights,
-			Dtype* output, bool isWX);
+		void forward_cpu_gemm(const Dtype* input, const Dtype* weights,Dtype* output, bool isWX);
 		void forward_cpu_bias(Dtype* output, const Dtype* bias);
-
 		void weight_cpu_gemm(const Dtype* data, const Dtype* gate_diff, Dtype* weight_diff, bool isWX);
-		void backward_cpu_gemm(const Dtype* weight, const Dtype* gate_diff, Dtype* data_diff, bool isWX);
 
-
-
+	
+#ifndef CPU_ONLY
+		void forward_gpu_gemm(const Dtype* input, const Dtype* weights,
+			Dtype* output, bool isWX);
+		void forward_gpu_bias(Dtype* output, const Dtype* bias);
+		void weight_gpu_gemm(const Dtype* data, const Dtype* gate_diff, Dtype* weight_diff, bool isWX);
+#endif
 		int T_;			//序列长度
 		int batch_size_;	//batch大小
+		int num_;
 
 		vector<int> kernel_shape_;
 		vector<int> kernel_shape_hx_;
@@ -80,7 +79,7 @@ namespace caffe
 		Blob<Dtype> h_to_h_;
 
 	private:
-		int num_;
+
 		Blob<Dtype> bias_multiplier_;			//偏移的乘数
 		inline void conv_im2col_cpu(const Dtype* data, Dtype* col_buff, bool isWX) {
 			if (isWX)
@@ -126,6 +125,55 @@ namespace caffe
 			}
 
 		}
+		inline int input_shape(int i) {
+			return (*bottom_shape_)[1 + i];
+		}
+#ifndef CPU_ONLY
+		inline void conv_im2col_gpu(const Dtype* data, Dtype* col_buff, bool isWX) {
+			if (isWX)
+			{
+				im2col_gpu(data, (*bottom_shape_)[1],
+					(*bottom_shape_)[2], (*bottom_shape_)[3],
+					kernel_shape_[2], kernel_shape_[3],
+					pad_.cpu_data()[0], pad_.cpu_data()[1],
+					stride_.cpu_data()[0], stride_.cpu_data()[1],
+					dilation_.cpu_data()[0], dilation_.cpu_data()[1], col_buff);
+			}
+			else
+			{
+				im2col_gpu(data, top_shape_[1],
+					top_shape_[2], top_shape_[3],
+					kernel_shape_[2], kernel_shape_[3],
+					wh_pad_[0], wh_pad_[1],
+					wh_stride_[0], wh_stride_[1],
+					dilation_.cpu_data()[0], dilation_.cpu_data()[1], col_buff);
+
+			}
+
+		}
+		inline void conv_col2im_gpu(const Dtype* col_buff, Dtype* data, bool isWX) {
+			if (isWX)
+			{
+				col2im_gpu(col_buff, (*bottom_shape_)[1],
+					(*bottom_shape_)[2], (*bottom_shape_)[3],
+					kernel_shape_[2], kernel_shape_[3],
+					pad_.cpu_data()[0], pad_.cpu_data()[1],
+					stride_.cpu_data()[0], stride_.cpu_data()[1],
+					dilation_.cpu_data()[0], dilation_.cpu_data()[1], data);
+			}
+			else
+			{
+				col2im_gpu(col_buff, top_shape_[1],
+					top_shape_[2], top_shape_[3],
+					kernel_shape_[2], kernel_shape_[3],
+					wh_pad_[0], wh_pad_[1],
+					wh_stride_[0], wh_stride_[1],
+					dilation_.cpu_data()[0], dilation_.cpu_data()[1], data);
+
+			}
+
+		}
+#endif
 	};
 
 }
