@@ -226,7 +226,7 @@ void caffe_gpu_rng_gaussian(const int n, const Dtype mu, const Dtype sigma,
                             Dtype* r);
 
 template <typename Dtype>
-void caffe_gpu_rng_bernoulli(const int n, const Dtype p, int* r);
+void caffe_gpu_rng_bernoulli(const int n,  const Dtype p, int* r);
 
 template <typename Dtype>
 void caffe_gpu_dot(const int n, const Dtype* x, const Dtype* y, Dtype* out);

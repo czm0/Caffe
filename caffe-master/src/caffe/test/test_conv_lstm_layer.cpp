@@ -260,7 +260,7 @@ namespace caffe
 
 	protected:
 		ConvolutionLSTMLayerTest()
-			: blob_bottom_(new Blob<Dtype>(3, 3, 6, 6)),
+			: blob_bottom_(new Blob<Dtype>(2, 2, 4, 4)),
 			blob_top_(new Blob<Dtype>()){}
 		virtual void SetUp() {
 			// fill the values
@@ -329,7 +329,7 @@ namespace caffe
 		ConvolutionLstmParameter* conv_lstm_param =layer_param.mutable_conv_lstm_param();
 		conv_lstm_param->set_kernel_size(3);
 		conv_lstm_param->set_stride(1);
-		conv_lstm_param->set_num_output(4);
+		conv_lstm_param->set_num_output(2);
 		conv_lstm_param->mutable_weight_filler()->set_type("gaussian");
 		conv_lstm_param->mutable_bias_filler()->set_type("constant");
 		conv_lstm_param->mutable_bias_filler()->set_value(1.0);

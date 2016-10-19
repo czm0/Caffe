@@ -3,7 +3,6 @@
 #include "caffe/filler.hpp"
 #include "caffe/util/math_functions.hpp"
 #include <vector>
-#include <fstream>
 using namespace std;
 namespace caffe
 {

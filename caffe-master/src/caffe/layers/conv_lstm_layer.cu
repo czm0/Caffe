@@ -133,6 +133,7 @@ namespace caffe
 					//gate_data = sigmoid(gate_data)
 					Dtype* gate_data = gate_[i]->mutable_gpu_data() + gate_[i]->offset(b) + gate_[i]->offset(t * batch_size_);
 					ComputeGateData<Dtype> << <CAFFE_GET_BLOCKS(top_dim_), CAFFE_CUDA_NUM_THREADS >> >(gate_data,top_dim_,i);
+					CUDA_POST_KERNEL_CHECK;
 				}
 				///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				//º∆À„cell
@@ -150,6 +151,7 @@ namespace caffe
 				}
 				////////////////////////////////////////////////////////////////////////////////////////////////////////
 				ComputeHData << <CAFFE_GET_BLOCKS(top_dim_), CAFFE_CUDA_NUM_THREADS >> >(pre_cell_data, gt, it, ft, ot, cell_data, h_data, t, top_dim_);
+				CUDA_POST_KERNEL_CHECK;
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
 		}
@@ -202,6 +204,7 @@ namespace caffe
 					gt_diff, it_diff, ft_diff, ot_diff,
 					cell_diff, cell_diff_t_1,
 					h_diff, t, top_dim_);
+				CUDA_POST_KERNEL_CHECK;
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 				//º∆À„ht_diff
