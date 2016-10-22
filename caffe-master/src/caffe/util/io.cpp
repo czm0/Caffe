@@ -243,5 +243,10 @@ void CVMatToDatum(const cv::Mat& cv_img, Datum* datum) {
   }
   datum->set_data(buffer);
 }
+
+
 #endif  // USE_OPENCV
+
+
+
 }  // namespace caffe

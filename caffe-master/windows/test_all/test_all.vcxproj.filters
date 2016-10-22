@@ -23,13 +23,10 @@
     <ClCompile Include="..\..\src\gtest\gtest-all.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\caffe\test\test_conv_lstm_layer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\caffe\test\test_im2col_layer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\caffe\test\test_noise_dropout_layer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\caffe\test\test_video_data_layer.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,8 +43,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="..\..\src\caffe\test\test_im2col_kernel.cu" />
   </ItemGroup>
 </Project>

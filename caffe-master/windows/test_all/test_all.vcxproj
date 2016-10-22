@@ -65,6 +65,7 @@
     <ClCompile>
       <DisableSpecificWarnings>4005;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -75,15 +76,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\caffe\test\test_caffe_main.cpp" />
     <ClCompile Include="..\..\src\caffe\test\test_common.cpp" />
-    <ClCompile Include="..\..\src\caffe\test\test_conv_lstm_layer.cpp" />
-    <ClCompile Include="..\..\src\caffe\test\test_im2col_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\test\test_noise_dropout_layer.cpp" />
+    <ClCompile Include="..\..\src\caffe\test\test_video_data_layer.cpp" />
     <ClCompile Include="..\..\src\gtest\gtest-all.cpp" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(CpuOnlyBuild)'=='false'">
-    <CudaCompile Include="..\..\src\caffe\test\test_im2col_kernel.cu">
-      <FileType>Document</FileType>
-    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\caffe\test\test_caffe_main.hpp" />
